@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/Basc.css"/>
+		<link rel="stylesheet" type="text/css" href="css/video.css"/>
+		<style type="text/css">
+			.xh_main{width: 1170px;margin: 0 auto;}
+			.padt100{padding-top: 100px;}
+			@media only screen and (max-width:1200px){
+				.xh_main{width: 100%;}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="xh_main padt100">
+			<div id="video-wrap">
+				<!--视频-->
+				<video id="video">
+					<source src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4" type="video/mp4"></source>
+				</video>
+				
+				<!--控制条-->
+				<div id="video-controls" class="video-controls">
+					<!--控制条背景-->
+					<div class="video-controls-bg"></div>
+					<!--进度条-->
+					<div id="loading-line">
+						<em id="loading_em"></em>
+						<span id="loading_span"></span>
+					</div>
+					<!--播放/暂停-->
+					<div id="video-btn"></div>
+					<!--播放进度-->
+					<div id="video-time">
+						<span id="video-now">00:00</span>
+						/
+						<span id="video-count">00:00</span>
+					</div>
+					<!--全屏-->
+					<div id="video-fullscreen" data-videofull='false'></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="js/video.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	new myVideo('false')
+</script>

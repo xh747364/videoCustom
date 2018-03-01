@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+/* reset 默认样式重置 */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, q, em, ul, li, ol, dl, dt, dd, form, article, aside, embed, table, td, th, input, button, legend, fieldlset, blockquote, textarea, label, strong, img, cite { margin: 0; padding: 0; outline: none; }
+body { font-family:'微软雅黑'; font-size: 12px; line-height: 1;  margin: 0 auto; }
+h1, h2, h3, h4, h5, h6 { font-weight: normal; font-size: 100%; }
+table { border-collapse: collapse; }
+ul, li , ol, li{ list-style: none; }
+img{ border: none; vertical-align:top;}
+em, cite, address,i { font-style: normal; font-weight: normal; }
+a { text-decoration:none;color: #333333;}
+input { outline:none; border:none; background-color:transparent;}
+input::-ms-clear { display:none; }
+textarea { outline:none; resize:none; ;overflow:auto;border:none;background: transparent;}
+/* 清浮动 */
+.clearfix:after,
+.clearfix:before{content: "";display: table;}
+.clearfix:after{clear: both;}
+.clearfix{*zoom:1;}
+.fl{float:left;}
+.fr{float:right;}
+.show{display:block;}
+.hide{display:none;}
