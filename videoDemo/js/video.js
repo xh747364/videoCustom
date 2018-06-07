@@ -1,36 +1,37 @@
 (function(win, doc){
-	var defaultSettings = {
-		videoBox : document.getElementById("video-wrap"),     //视频父级
-		video : document.getElementById("video"),            //获取视频
-		videoControls : document.getElementById('video-controls'),  //控制条
-		loadingLine : document.getElementById('loading-line'),
-		loadingLineEm : document.getElementById('loading_em'),     //进度条
-		loadingLineSp : document.getElementById('loading_span'),  //滑块
-		VideoBtn : document.getElementById("video-btn"),         //播放按钮
-		VideoNow : document.getElementById("video-now"),        //当前进度
-		VideoCount : document.getElementById("video-count"),   //总进度
-		VideoFullScreen : document.getElementById("video-fullscreen"), //全屏
-		percent : 0, //播放进度
-		autoPlay:'false' //自动播放
-	}
-	var myVideo = function(options){    //是否自动播放
-        if(!options) {
+	var myVideo = function(e,obj){
+        if(!e && !obj) {
             throw new Error("请传入配置参数");
         }
-		if(options == 'true'){
-			defaultSettings.autoPlay = 'true';
-		}else{
-			defaultSettings.autoPlay = 'false';
+        var arrSettings = [];
+		var parentObj = obj;
+		for(var i = 0;i<parentObj.length;i++){
+			var arr = {
+				videoBox : parentObj.eq(i)[0],     //视频父级
+				video : parentObj.eq(i).find('.video')[0],            //获取视频
+				videoControls : parentObj.eq(i).find('.video-controls')[0],  //控制条
+				loadingLine : parentObj.eq(i).find('.loading-line')[0],
+				loadingLineEm : parentObj.eq(i).find('.loading_em')[0],     //进度条
+				loadingLineSp : parentObj.eq(i).find('.loading_span')[0],  //滑块
+				VideoBtn : parentObj.eq(i).find('.video-btn')[0],         //播放按钮
+				VideoNow : parentObj.eq(i).find('.video-now')[0],        //当前进度
+				VideoCount : parentObj.eq(i).find('.video-count')[0],   //总进度
+				VideoFullScreen : parentObj.eq(i).find('.video-fullscreen')[0], //全屏
+				percent : 0, //播放进度
+				autoPlay:'false' //自动播放
+			}
+			arrSettings.push(arr)
+		}	
+		//初始化  this.init(e,arrSettings[0])
+		for(var i = 0;i< arrSettings.length;i++){
+			var a = this.init(e,arrSettings[i]);
 		}
-		//初始化
-        this.init(defaultSettings)
 	}
 	myVideo.prototype = {
-		init:function(defaultSettings){
+		init:function(e,defaultSettings){
 			var that = this;
 			defaultSettings.video.addEventListener("timeupdate",function(){
 				defaultSettings.percent = Math.floor(this.currentTime/this.duration*100)
-			    //console.log(Math.floor(this.currentTime/this.duration*100));
 			    if(defaultSettings.percent != 0){
 			    	defaultSettings.loadingLineEm.style.width = defaultSettings.percent + '%';
 			    	defaultSettings.loadingLineSp.style.left = defaultSettings.percent + '%';
@@ -39,11 +40,15 @@
 			    	defaultSettings.VideoCount.innerHTML = that.Appendzero(Math.floor(this.duration/60)) + ':' + that.Appendzero(Math.floor(this.duration%60))
 			    }
 			    if(defaultSettings.percent == 100){
-			    	defaultSettings.VideoBtn.setAttribute("class", "pause")
+			    	defaultSettings.VideoBtn.setAttribute("class", "video-btn pause")
 			    }
 			});
-			defaultSettings.VideoBtn.addEventListener('click',that.playPause)
-			defaultSettings.VideoFullScreen.addEventListener('click',that.launchFullScreen)
+			defaultSettings.VideoBtn.addEventListener('click',function(){
+				that.playPause(defaultSettings)
+			})
+			defaultSettings.VideoFullScreen.addEventListener('click',function(){
+				that.launchFullScreen(defaultSettings)
+			})
 			defaultSettings.videoBox.onmouseenter = function(){
 				defaultSettings.videoControls.style.bottom = '0px'
 			}
@@ -51,30 +56,30 @@
 				defaultSettings.videoControls.style.bottom = '-75px'
 			}
 			if(defaultSettings.autoPlay == 'true'){
-				that.playPause()
+				that.playPause(defaultSettings)
 			}
 			window.onresize = function(){
 				if(!that.checkFull()){
-					defaultSettings.videoBox.setAttribute("class", " ")
+					defaultSettings.videoBox.setAttribute("class", "video-wrap")
 			    	defaultSettings.VideoFullScreen.setAttribute("data-videofull", "false")
 				}
 			}
-			that.videoRange()
+			that.videoRange(e,defaultSettings)
 		},
-		playPause:function(){
+		playPause:function(defaultSettings){
 	       	if (defaultSettings.video.paused){
 	        	defaultSettings.video.play();
-	            defaultSettings.VideoBtn.setAttribute("class", "play")
+	            defaultSettings.VideoBtn.setAttribute("class", "video-btn play")
 	       	}else{
 	            defaultSettings.video.pause();
-	            defaultSettings.VideoBtn.setAttribute("class", "pause")
+	            defaultSettings.VideoBtn.setAttribute("class", "video-btn pause")
 	       	}
 		},
 		Appendzero:function(obj){
 			if(obj<10) return "0" +""+ obj;  
         	else return obj;
 		},
-		launchFullScreen:function(){
+		launchFullScreen:function(defaultSettings){
 			if(defaultSettings.VideoFullScreen.getAttribute("data-videofull") == 'false'){
 				var element = document.documentElement;
 				if(element.requestFullScreen) {
@@ -84,7 +89,7 @@
 			    } else if(element.webkitRequestFullScreen) {
 			        element.webkitRequestFullScreen();
 			    }
-			    defaultSettings.videoBox.setAttribute("class", "video-fullscreen")
+			    defaultSettings.videoBox.setAttribute("class", "video-wrap video-fullscreen-active")
 		    	defaultSettings.VideoFullScreen.setAttribute("data-videofull", "true")
 			}else{
 				var element = document;
@@ -95,7 +100,7 @@
 			    } else if(element.webkitCancelFullScreen) {
 			        element.webkitCancelFullScreen();
 			    }
-			    defaultSettings.videoBox.setAttribute("class", " ")
+			    defaultSettings.videoBox.setAttribute("class", "video-wrap")
 		    	defaultSettings.VideoFullScreen.setAttribute("data-videofull", "false")
 			}
 		},
@@ -105,8 +110,9 @@
 			if(isFull === undefined) isFull = false;
 			return isFull;
 		},
-		videoRange:function(e){
+		videoRange:function(e,aaa){
 			//拖拽
+			var defaultSettings = aaa;
 			var dv = defaultSettings.loadingLineSp;
 			var video = defaultSettings.video;
 			var Lwidth = parseInt(defaultSettings.videoControls.offsetWidth);

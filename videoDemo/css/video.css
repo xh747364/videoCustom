@@ -1,14 +1,13 @@
-#video-wrap{width: 100%;position: relative;overflow: hidden;}
-#video-wrap:before{content: '';display: block;width: 100%;padding-top: 56.25%;}
-#video-wrap video{position: absolute;width: 100%;height: 100%;top: 0;left: 0;}
+.video-wrap{width: 100%;position: relative;overflow: hidden;height: 700px;background: #000000;}
+.video-wrap video{width:100%;height:100%;object-fit: contain}
 .video-controls-bg{position: absolute;width: 100%;height: 65px;left: 0;bottom: 0;background: #000000;opacity: .6;filter: alpha(opacity=60);z-index: -1;}
 .video-controls{position: absolute;width: 100%;height: 65px;box-sizing: border-box;padding-top: 5px;left: 0;bottom: -75px;z-index: 3;transition: all ease .4s;}
-#loading-line{position: absolute;top: 0;background: rgba(255,255,255,.6);width: 100%;height: 4px;left: 0;}
-#loading-line em{position: relative;display: block;width: 1%;height: 4px;background: #ff4444;}
-#loading-line span{display: block;position: absolute;left: 1%;margin-left: -10px;width: 10px;height: 16px;top: 50%;margin-top: -8px;background: #FFFFFF;cursor: pointer;}
-#video-btn{width: 55px;height: 60px;background-image: url(../images/play.png);background-position: center;background-repeat: no-repeat;background-size: 16px 24px;cursor: pointer;display: inline-block;}
+.loading-line{position: absolute;top: 0;background: rgba(255,255,255,.6);width: 100%;height: 4px;left: 0;}
+.loading-line em{position: relative;display: block;width: 1%;height: 4px;background: #ff4444;}
+.loading-line span{display: block;position: absolute;left: 1%;margin-left: -10px;width: 10px;height: 16px;top: 50%;margin-top: -8px;background: #FFFFFF;cursor: pointer;}
+.video-btn{width: 55px;height: 60px;background-image: url(../images/play.png);background-position: center;background-repeat: no-repeat;background-size: 16px 24px;cursor: pointer;display: inline-block;}
 .play{background-image: url(../images/pause.png) !important;}
 .pause{background-image: url(../images/play.png) !important;}
-#video-time{display: inline-block;line-height: 60px;color: #FFFFFF;vertical-align: top;}
-#video-fullscreen{width: 55px;height: 60px;background-image: url(../images/fullscreen.png);background-position: center;background-repeat: no-repeat;background-size: 24px 24px;cursor: pointer;float: right;}
-.video-fullscreen{position: fixed !important;width: 100%;height: 100%;top: 0;left: 0;background: #000000;}
+.video-time{display: inline-block;line-height: 60px;color: #FFFFFF;vertical-align: top;}
+.video-fullscreen{width: 55px;height: 60px;background-image: url(../images/fullscreen.png);background-position: center;background-repeat: no-repeat;background-size: 24px 24px;cursor: pointer;float: right;}
+.video-fullscreen-active{position: fixed !important;width: 100%;height: 100%;top: 0;left: 0;background: #000000;}
